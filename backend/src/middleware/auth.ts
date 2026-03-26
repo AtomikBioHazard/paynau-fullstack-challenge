@@ -1,6 +1,6 @@
 import type { Request, Response, NextFunction } from 'express';
 import { verifyToken } from '@/services/auth.service';
-import type { AuthPayload } from '../../../shared/types';
+import type { AuthPayload } from '@shared/types';
 
 declare global {
   namespace Express {

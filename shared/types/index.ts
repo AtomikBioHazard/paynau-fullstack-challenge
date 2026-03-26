@@ -57,9 +57,20 @@ export interface AuthPayload {
   username: string;
 }
 
-export interface ServiceResult<T> {
+export interface LoginResult {
+  user: Omit<User, 'password_hash'>;
+  token: string;
+}
+
+export interface ApiResponse<T> {
   success: boolean;
   data?: T;
+  pagination?: {
+    page: number;
+    limit: number;
+    total: number;
+    totalPages: number;
+  };
   error?: string;
 }
 
@@ -72,5 +83,11 @@ export interface PaginatedResult<T> {
     total: number;
     totalPages: number;
   };
+  error?: string;
+}
+
+export interface ServiceResult<T = void> {
+  success: boolean;
+  data?: T;
   error?: string;
 }

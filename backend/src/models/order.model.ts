@@ -1,5 +1,5 @@
 import db from './database';
-import type { Order, OrderWithItems, OrderItem, OrderInput, PaginatedResult, ServiceResult } from '../../../shared/types';
+import type { Order, OrderWithItems, OrderItem, OrderInput, PaginatedResult, ServiceResult } from '@shared/types';
 
 const DEFAULT_PAGE = 1;
 const DEFAULT_LIMIT = 10;

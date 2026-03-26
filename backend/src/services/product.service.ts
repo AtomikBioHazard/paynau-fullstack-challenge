@@ -1,5 +1,5 @@
 import * as productModel from '@/models/product.model';
-import type { Product, ProductInput, ServiceResult, PaginatedResult } from '../../../shared/types';
+import type { Product, ProductInput, ServiceResult, PaginatedResult } from '@shared/types';
 
 export function listProducts(page?: number, limit?: number): PaginatedResult<Product> {
   return productModel.getAllProducts(page, limit);

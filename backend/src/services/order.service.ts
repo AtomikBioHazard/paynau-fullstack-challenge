@@ -1,6 +1,6 @@
 import * as orderModel from '@/models/order.model';
 import * as productModel from '@/models/product.model';
-import type { OrderWithItems, OrderInput, ServiceResult, PaginatedResult } from '../../../shared/types';
+import type { OrderWithItems, OrderInput, ServiceResult, PaginatedResult } from '@shared/types';
 
 export function listOrders(page?: number, limit?: number): PaginatedResult<OrderWithItems> {
   return orderModel.getAllOrders(page, limit);
@@ -21,7 +21,7 @@ export function createOrder(input: OrderInput): ServiceResult<OrderWithItems> {
     if (productIds.has(item.product_id)) return { success: false, error: 'Duplicate products in order' };
     productIds.add(item.product_id);
     const productResult = productModel.getProductById(item.product_id);
-    if (!productResult.success) return { success: false, error: `Product ${item.product_id} not found` };
+    if (!productResult.success || !productResult.data) return { success: false, error: `Product ${item.product_id} not found` };
     if (productResult.data.stock < item.quantity) return { success: false, error: `Insufficient stock for "${productResult.data.name}"` };
     total += productResult.data.price * item.quantity;
   }
@@ -30,7 +30,7 @@ export function createOrder(input: OrderInput): ServiceResult<OrderWithItems> {
     const version = productModel.getProductVersion(item.product_id);
     if (version === null) return { success: false, error: `Product ${item.product_id} not found` };
     const updateResult = productModel.updateStockAtomic(item.product_id, item.quantity, version);
-    if (!updateResult.success) return updateResult;
+    if (!updateResult.success) return updateResult as ServiceResult<OrderWithItems>;
   }
   
   return orderModel.createOrderWithItems(input, total);

@@ -7,7 +7,7 @@ const DB_PATH = process.env.DATABASE_URL || path.join(DB_DIR, 'paynau.db');
 
 if (!fs.existsSync(DB_DIR)) fs.mkdirSync(DB_DIR, { recursive: true });
 
-const db = new Database(DB_PATH);
+const db: any = new Database(DB_PATH);
 db.pragma('journal_mode = WAL');
 db.pragma('foreign_keys = ON');
 
@@ -51,6 +51,8 @@ export function initDatabase(): void {
     CREATE INDEX IF NOT EXISTS idx_products_name ON products(name);
     CREATE INDEX IF NOT EXISTS idx_order_items_order ON order_items(order_id);
     CREATE INDEX IF NOT EXISTS idx_order_items_product ON order_items(product_id);
+
+    INSERT OR IGNORE INTO users (id, username, password_hash) VALUES (1, 'admin', '$2b$10$xGt.90B4thP.jJxpwqEe4OIetFl10abos2Va2XTVdzPGWxhcdpf46');
   `);
 }
 

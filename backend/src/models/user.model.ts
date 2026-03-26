@@ -1,6 +1,6 @@
 import db from './database';
 import bcrypt from 'bcrypt';
-import type { User, ServiceResult } from '../../../shared/types';
+import type { User, ServiceResult } from '@shared/types';
 
 const SALT_ROUNDS = 10;
 
